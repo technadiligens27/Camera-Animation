@@ -18,7 +18,7 @@ import "./Experience.css";
 
 const Experience = () => {
   const hdriPath =
-    `${import.meta.env.BASE_URL}st_fagans_interior_1k.hdr`;
+    `${import.meta.env.BASE_URL}st_fagans_interior_512.hdr`;
 
   return (
     <div className="experience-container">
