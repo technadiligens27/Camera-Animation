@@ -11,6 +11,7 @@ import * as THREE from "three";
 
 import Model from "./Model/Model";
 import "./Experience.css";
+import Loading from "../Loading/Loading";
 
 // =====================================
 // EXPERIENCE
@@ -22,6 +23,10 @@ const Experience = () => {
 
   return (
     <div className="experience-container">
+
+      {/* HTML LOADING SCREEN */}
+      <Loading />
+
       <Canvas
         camera={{
           position: [5, 4, 7],
