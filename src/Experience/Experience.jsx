@@ -6,7 +6,7 @@ import {
 } from "@react-three/drei";
 
 import { Canvas } from "@react-three/fiber";
-import { useRef } from "react";
+import { Suspense } from "react";
 import * as THREE from "three";
 
 import Model from "./Model/Model";
@@ -17,6 +17,9 @@ import "./Experience.css";
 // =====================================
 
 const Experience = () => {
+  const hdriPath =
+    `${import.meta.env.BASE_URL}st_fagans_interior_1k.hdr`;
+
   return (
     <div className="experience-container">
       <Canvas
@@ -36,30 +39,33 @@ const Experience = () => {
           toneMappingExposure: 1.4,
         }}
       >
-        {/* ENVIRONMENT LIGHTING */}
-        <Environment
-          preset="lobby"
-          environmentIntensity={0.8}
-        />
+        <Suspense fallback={null}>
 
-        {/* GENERAL LIGHTING */}
-        <ambientLight intensity={1} />
+          {/* LOCAL HDRI */}
+          <Environment
+            files={hdriPath}
+            environmentIntensity={0.8}
+            background={false}
+          />
 
+          {/* GENERAL LIGHTING */}
+          <ambientLight intensity={1} />
 
+          {/* MODEL */}
+          <Model />
 
-        {/* MODEL */}
-        <Model />
+          {/* SOFT SHADOW */}
+          <ContactShadows
+            position={[0, -3, 0]}
+            opacity={0.4}
+            scale={12}
+            blur={3.5}
+            far={10}
+            resolution={100}
+            color="#666666"
+          />
 
-        {/* SOFT SHADOW */}
-        <ContactShadows
-          position={[0, -3, 0]}
-          opacity={0.4}
-          scale={12}
-          blur={3.5}
-          far={10}
-          resolution={100}
-          color="#666666"
-        />
+        </Suspense>
 
         {/* CAMERA CONTROLS */}
         <OrbitControls
