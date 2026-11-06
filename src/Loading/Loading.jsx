@@ -1,11 +1,22 @@
 
 import { useProgress } from "@react-three/drei";
-import './Loading.css'
+import { useEffect, useState } from "react";
+import "./Loading.css";
 
 const Loading = () => {
-  const { active, progress } = useProgress();
+  const { active, progress, total } = useProgress();
 
-  if (!active) return null;
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    if (active || total > 0) {
+      setHasStarted(true);
+    }
+  }, [active, total]);
+
+  if (hasStarted && !active) {
+    return null;
+  }
 
   return (
     <div className="loading">
@@ -16,7 +27,7 @@ const Loading = () => {
           <div
             className="loading-progress"
             style={{
-              width: `${progress}%`,
+              width: `${Math.min(progress, 100)}%`,
             }}
           />
         </div>
